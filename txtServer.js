@@ -18,21 +18,26 @@ connection.on('error',onError);
 		var v="";
 		console.log("--------");
 		vv=data.toString();
+		vv=vv.replace("\n","");
+		vv=vv.replace("\r","");
 		if ( vv == "" ) vv="/main.txt";
 		vv="./" + vv;
 		console.log(vv);
 		fs.readFile ( vv , function  ( err , s ){
 			if (err) console.log(err);
 			connection.end( s);
+			connection.destroy();
 		});
 		
 	}
 	function onClose(){
 		var d = Date();
 		console.log(d);
+		connection.destroy();
 	}
 	function onError(data){
 		console.log(data);
+		connection.destroy();
 	}
 
 
